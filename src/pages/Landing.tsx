@@ -1,4 +1,4 @@
-export function Home () {
+export function Landing () {
   return (
     <div className='min-h-screen flex items-center justify-center bg-gray-100 px-4'>
       <div className='bg-white shadow-2xl rounded-2xl overflow-hidden flex flex-col md:flex-row w-full max-w-4xl'>
