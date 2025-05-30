@@ -16,7 +16,7 @@ type PageContextType = {
 export const PageContext = createContext<PageContextType | null>(null)
 
 function App () {
-  const [page, setPage] = useState<number>(0)
+  const [page, setPage] = useState<number>(1)
 
   return (
     <PageContext.Provider value={{ page, setPage }}>
