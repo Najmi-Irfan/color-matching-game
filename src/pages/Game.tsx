@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { COLOUR_LIST } from '../constant'
 import type { AxisProps } from '../types/axis'
 import { PageContext } from '../App'
