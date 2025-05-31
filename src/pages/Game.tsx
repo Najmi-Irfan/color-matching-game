@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { CIRCLE_SIZE, COLOUR_LIST } from '../constant'
+import { COLOUR_LIST } from '../constant'
 import type { AxisProps } from '../types/axis'
 import { PageContext } from '../App'
 import { useScoreContext } from '../hooks/score'
