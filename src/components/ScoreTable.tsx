@@ -19,13 +19,13 @@ export function ScoreTable ({scoreList}:{scoreList: ScoreProps[]}) {
 
   return (
     <>
-      <p className='text-black text-center text-3xl font-bold pb-4'>
+      <p className='text-[#042e27] text-center text-3xl font-bold pb-4'>
         Top Scores
       </p>
 
       <div>
         {shouldShowTable ? (
-          <table className='w-full'>
+          <table className='w-full text-[#042e27]'>
             <thead>
               <tr className='text-center'>
                 <th className='px-4 py-2 rounded-l-md'>No.</th>
