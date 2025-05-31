@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { COLOUR_LIST } from '../constant'
 import type { AxisProps } from '../types/axis'
+import { PageContext } from '../App'
 
 export function Game () {
+  const pageCtx = useContext(PageContext)
   const [winningColor, setWinningColor] = useState<string>('')
   const [winCount, setWinCount] = useState<number>(0)
   const [remainingTime, setRemainingTime] = useState<number>(20)
@@ -26,6 +28,12 @@ export function Game () {
 
     return () => clearInterval(timer)
   }, [])
+
+  useEffect(() => {
+    if (remainingTime === 0) {
+      pageCtx?.setPage(2)
+    }
+  }, [remainingTime])
 
   const generateCircles = () => {
     // to store list of circle with its coordinate

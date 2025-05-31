@@ -1,20 +1,38 @@
 import { useForm } from 'react-hook-form'
 import { Input } from '../components/InputField'
+import type { ScoreProps } from '../types/score'
+import { useScoreContext } from '../hooks/score'
+import { PageContext } from '../App'
+import { useContext } from 'react'
+import { ScoreTable } from '../components/ScoreTable'
 
 interface IFormInput {
   playerName: string
 }
 
 function LeftSideCard () {
+  const { setScoreList, scoreList } = useScoreContext()
+  const pageCtx = useContext(PageContext)
+
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<IFormInput>()
+  } = useForm<IFormInput>({
+    defaultValues: {
+      playerName: ''
+    }
+  })
 
   const onSubmit = (data: IFormInput) => {
-    console.log('Form Data:', data)
-    // Start the game here
+    const newPlayer = {
+      id: scoreList.length + 1,
+      score: 0,
+      name: data.playerName,
+      date: new Date().toISOString()
+    }
+    setScoreList((prevList: ScoreProps[]) => [...prevList, newPlayer])
+    pageCtx?.setPage(1)
   }
   return (
     <div className='md:w-1/2 p-8 flex flex-col justify-center'>
@@ -46,10 +64,7 @@ function LeftSideCard () {
 function RightSideCard () {
   return (
     <div className='md:w-1/2 bg-[#fa4454] p-8 flex flex-col'>
-      <p className='text-black text-center text-3xl font-bold pb-4'>
-        Top scores
-      </p>
-      <p className='text-center mt-2'>No top score available right now</p>
+      <ScoreTable />
     </div>
   )
 }
