@@ -36,7 +36,7 @@ function LeftSideCard () {
     pageCtx?.setPage(1)
   }
   return (
-    <div className='md:w-1/2 p-8 flex flex-col h-screen'>
+    <div className='md:w-1/2 p-8 flex flex-col'>
       <div className='text-white text-center'>
         <h2 className='text-3xl font-bold mb-4'>Reaction Game</h2>
         <p>How to play:</p>
@@ -79,7 +79,7 @@ function RightSideCard () {
 
 export function Landing () {
   return (
-    <div className='min-h-screen flex items-center justify-center px-4'>
+    <div className="min-h-screen flex items-center justify-center px-4 py-4 sm:py-0">
       <div className='bg-[#2A2A29] shadow-2xl rounded-md overflow-hidden flex flex-col md:flex-row w-full max-w-4xl'>
         <LeftSideCard />
         <RightSideCard />
