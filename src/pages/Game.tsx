@@ -52,12 +52,19 @@ export function Game () {
     const targetColor = COLOUR_LIST[Math.floor(Math.random() * listLength)]
 
     const containerWidth = window.innerWidth
+
+    // try to define fixed game container with height 400px
     const containerHeight = 400
+
+    // set circle size based on screen size (to handl responsiveness also)
     const circleSize = window.innerWidth >= 640 ? 100 : 50
     const radius = circleSize / 2
+
+    // checking to most far circle
     const maxX = containerWidth - circleSize
     const maxY = containerHeight - circleSize
 
+    // creating const for checking the overlap circles
     const isOverlapping = (x: number, y: number, list: AxisProps[]) => {
       for (const item of list) {
         const existingX = (item.x / 100) * containerWidth
