@@ -1,30 +1,27 @@
-import {
-  createContext,
-  useState,
-  type Dispatch,
-  type SetStateAction
-} from 'react'
+// App.tsx or main component
+import { createContext, useState } from 'react'
 import { Landing } from './pages/Landing'
 import { Game } from './pages/Game'
 import { Scores } from './pages/Scores'
-
-type PageContextType = {
-  page: number
-  setPage: Dispatch<SetStateAction<number>>
-}
+import type { ScoreProps, ScoreContextType } from './types/score'
+import type { PageContextType } from './types/page'
 
 export const PageContext = createContext<PageContextType | null>(null)
+export const ScoreContext = createContext<ScoreContextType | null>(null)
 
 function App () {
-  const [page, setPage] = useState<number>(1)
+  const [page, setPage] = useState<number>(0)
+  const [scoreList, setScoreList] = useState<ScoreProps[]>([])
 
   return (
     <PageContext.Provider value={{ page, setPage }}>
-      <>
-        {page === 0 && <Landing />}
-        {page === 1 && <Game />}
-        {page === 2 && <Scores />}
-      </>
+      <ScoreContext.Provider value={{ scoreList, setScoreList }}>
+        <>
+          {page === 0 && <Landing />}
+          {page === 1 && <Game />}
+          {page === 2 && <Scores />}
+        </>
+      </ScoreContext.Provider>
     </PageContext.Provider>
   )
 }
