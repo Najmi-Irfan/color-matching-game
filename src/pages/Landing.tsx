@@ -3,7 +3,7 @@ import { Input } from '../components/InputField'
 import type { ScoreProps } from '../types/score'
 import { useScoreContext } from '../hooks/score'
 import { PageContext } from '../App'
-import { useContext } from 'react'
+import { useCallback, useContext } from 'react'
 import { ScoreTable } from '../components/ScoreTable'
 import moment from 'moment'
 
@@ -25,16 +25,20 @@ function LeftSideCard () {
     }
   })
 
-  const onSubmit = (data: IFormInput) => {
-    const newPlayer = {
-      id: scoreList.length + 1,
-      score: 0,
-      name: data.playerName,
-      date: moment().format('DD/MM/YYYY')
-    }
-    setScoreList((prevList: ScoreProps[]) => [...prevList, newPlayer])
-    pageCtx?.setPage(1)
-  }
+  const onSubmit = useCallback(
+    (data: IFormInput) => {
+      const newPlayer = {
+        id: scoreList.length + 1,
+        score: 0,
+        name: data.playerName,
+        date: moment().format('DD/MM/YYYY')
+      }
+      setScoreList((prevList: ScoreProps[]) => [...prevList, newPlayer])
+      pageCtx?.setPage(1)
+    },
+    [scoreList.length, setScoreList, pageCtx]
+  )
+
   return (
     <div className='md:w-1/2 p-8 flex flex-col'>
       <div className='text-white text-center'>
@@ -79,7 +83,7 @@ function RightSideCard () {
 
 export function Landing () {
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-4 sm:py-0">
+    <div className='min-h-screen flex items-center justify-center px-4 py-4 sm:py-0'>
       <div className='bg-[#2A2A29] shadow-2xl rounded-md overflow-hidden flex flex-col md:flex-row w-full max-w-4xl'>
         <LeftSideCard />
         <RightSideCard />

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { COLOUR_LIST } from '../constant'
 import type { AxisProps } from '../types/axis'
 import { PageContext } from '../App'
@@ -13,7 +13,7 @@ export function Game () {
   const [remainingTime, setRemainingTime] = useState<number>(20)
   const [circleDetail, setCircleDetail] = useState<AxisProps[]>([])
   const [message, setMessage] = useState<string>('')
-  const listLength = COLOUR_LIST.length
+  const listLength = useMemo(() => COLOUR_LIST.length, [])
 
   useEffect(() => {
     // generate circle for the first time when the page load
@@ -47,39 +47,40 @@ export function Game () {
     }
   }, [remainingTime])
 
-  const generateCircles = () => {
-    // to store list of circle with its coordinate
+  const generateCircles = useCallback(() => {
     const circleList = []
+    // Select index randomly from the array
     const targetColor = COLOUR_LIST[Math.floor(Math.random() * listLength)]
 
-    //traverse color 1 by 1 and assign its x and y axis
+    // traverse each element to generate random axis X and Y
     for (let i = 0; i < listLength; i++) {
       const circleObj: AxisProps = {
         color: COLOUR_LIST[i],
         x: Math.random() * (100 - 5),
         y: Math.random() * (100 - 5)
       }
-
       circleList.push(circleObj)
     }
+
     setWinningColor(targetColor)
     setCircleDetail(circleList)
-  }
+  }, [listLength])
 
-  const handleClick = (selectedColor: string) => {
-    if (remainingTime <= 0) return
+  const handleClick = useCallback(
+    (selectedColor: string) => {
+      if (selectedColor === winningColor) {
+        setWinCount(prev => prev + 1)
+        setMessage('Congratulations! You won!')
+      } else {
+        setMessage(`Ops, this is ${selectedColor} not ${winningColor}.`)
+      }
 
-    if (selectedColor === winningColor) {
-      setWinCount(prev => prev + 1)
-      setMessage('Congratulations! You won!')
-    } else {
-      setMessage(`Ops, this is ${selectedColor} not ${winningColor}.`)
-    }
-
-    setTimeout(() => {
-      generateCircles()
-    }, 500)
-  }
+      setTimeout(() => {
+        generateCircles()
+      }, 500)
+    },
+    [remainingTime, winningColor, generateCircles]
+  )
 
   return (
     <div className='p-4 text-white text-center'>
