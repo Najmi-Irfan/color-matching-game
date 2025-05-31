@@ -36,7 +36,7 @@ function LeftSideCard () {
     pageCtx?.setPage(1)
   }
   return (
-    <div className='md:w-1/2 p-8 flex flex-col justify-center'>
+    <div className='md:w-1/2 p-8 flex flex-col h-screen'>
       <div className='text-white text-center'>
         <h2 className='text-3xl font-bold mb-4'>Reaction Game</h2>
         <p>How to play:</p>
@@ -45,14 +45,20 @@ function LeftSideCard () {
           round)
         </p>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)} className='space-y-4 mt-6'>
-        <Input
-          register={register}
-          formName='playerName'
-          placeholder='Enter your name'
-          error={errors.playerName}
-          label='Player Name'
-        />
+
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className='flex flex-col flex-1 justify-between'
+      >
+        <div className='flex flex-col items-center justify-center flex-1 space-y-4'>
+          <Input
+            register={register}
+            formName='playerName'
+            placeholder='Enter your name'
+            error={errors.playerName}
+            label='Player Name'
+          />
+        </div>
 
         <button type='submit' className='w-full bg-white py-2 rounded-md'>
           Start Game
@@ -63,10 +69,10 @@ function LeftSideCard () {
 }
 
 function RightSideCard () {
-  const { setScoreList, scoreList } = useScoreContext()
+  const { scoreList } = useScoreContext()
   return (
     <div className='md:w-1/2 bg-[#fa4454] p-8 flex flex-col'>
-      <ScoreTable scoreList={scoreList}/>
+      <ScoreTable scoreList={scoreList} />
     </div>
   )
 }

@@ -4,7 +4,7 @@ import { useScoreContext } from '../hooks/score'
 import { PageContext } from '../App'
 
 export function Scores () {
-  const { setScoreList, scoreList } = useScoreContext()
+  const { scoreList } = useScoreContext()
   const pageCtx = useContext(PageContext)
 
   return (
