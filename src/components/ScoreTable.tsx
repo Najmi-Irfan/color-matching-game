@@ -25,7 +25,7 @@ export function ScoreTable ({scoreList}:{scoreList: ScoreProps[]}) {
 
       <div>
         {shouldShowTable ? (
-          <table className='w-full border-separate border-spacing-y-2'>
+          <table className='w-full'>
             <thead>
               <tr className='text-center'>
                 <th className='px-4 py-2 rounded-l-md'>No.</th>

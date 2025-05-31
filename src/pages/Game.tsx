@@ -43,7 +43,7 @@ export function Game () {
         saveScore(updatedData)
         return updatedData
       })
-      pageCtx?.setPage(2)
+      // pageCtx?.setPage(2)
     }
   }, [remainingTime])
 
@@ -76,7 +76,9 @@ export function Game () {
       setMessage(`Ops, this is ${selectedColor} not ${winningColor}.`)
     }
 
-    generateCircles()
+    setTimeout(() => {
+      generateCircles()
+    }, 500)
   }
 
   return (
