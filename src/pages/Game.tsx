@@ -61,8 +61,8 @@ export function Game () {
     const radius = circleSize / 2
 
     // checking to most far circle
-    const maxX = containerWidth - circleSize
-    const maxY = containerHeight - circleSize
+    const maxX = containerWidth - radius * 2
+    const maxY = containerHeight - radius * 2
 
     // creating const for checking the overlap circles
     const isOverlapping = (x: number, y: number, list: AxisProps[]) => {
@@ -88,8 +88,8 @@ export function Game () {
       if (!isOverlapping(x, y, circleList)) {
         circleList.push({
           color: COLOUR_LIST[i],
-          x: (x / containerWidth) * 100,
-          y: (y / containerHeight) * 100
+          x: Math.min((x / containerWidth) * 100, 100 - (circleSize / containerWidth) * 100),
+          y: Math.min((y / containerHeight) * 100, 100 - (circleSize / containerHeight) * 100)
         })
         i++
       }
