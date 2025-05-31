@@ -11,7 +11,7 @@ export const PageContext = createContext<PageContextType | null>(null)
 export const ScoreContext = createContext<ScoreContextType | null>(null)
 
 function App () {
-  const [page, setPage] = useState<number>(1)
+  const [page, setPage] = useState<number>(0)
   const [scoreList, setScoreList] = useState<ScoreProps[]>(fetchScore())
 
   return (
