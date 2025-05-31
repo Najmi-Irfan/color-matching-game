@@ -5,13 +5,14 @@ import { Game } from './pages/Game'
 import { Scores } from './pages/Scores'
 import type { ScoreProps, ScoreContextType } from './types/score'
 import type { PageContextType } from './types/page'
+import { fetchScore } from './service/api'
 
 export const PageContext = createContext<PageContextType | null>(null)
 export const ScoreContext = createContext<ScoreContextType | null>(null)
 
 function App () {
   const [page, setPage] = useState<number>(0)
-  const [scoreList, setScoreList] = useState<ScoreProps[]>([])
+  const [scoreList, setScoreList] = useState<ScoreProps[]>(fetchScore())
 
   return (
     <PageContext.Provider value={{ page, setPage }}>

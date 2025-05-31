@@ -5,6 +5,7 @@ import { useScoreContext } from '../hooks/score'
 import { PageContext } from '../App'
 import { useContext } from 'react'
 import { ScoreTable } from '../components/ScoreTable'
+import moment from 'moment'
 
 interface IFormInput {
   playerName: string
@@ -29,7 +30,7 @@ function LeftSideCard () {
       id: scoreList.length + 1,
       score: 0,
       name: data.playerName,
-      date: new Date().toISOString()
+      date: moment().format('DD/MM/YYYY')
     }
     setScoreList((prevList: ScoreProps[]) => [...prevList, newPlayer])
     pageCtx?.setPage(1)
@@ -62,9 +63,10 @@ function LeftSideCard () {
 }
 
 function RightSideCard () {
+  const { setScoreList, scoreList } = useScoreContext()
   return (
     <div className='md:w-1/2 bg-[#fa4454] p-8 flex flex-col'>
-      <ScoreTable />
+      <ScoreTable scoreList={scoreList}/>
     </div>
   )
 }

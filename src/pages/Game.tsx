@@ -2,8 +2,11 @@ import React, { useContext, useEffect, useState } from 'react'
 import { COLOUR_LIST } from '../constant'
 import type { AxisProps } from '../types/axis'
 import { PageContext } from '../App'
+import { useScoreContext } from '../hooks/score'
+import { saveScore } from '../service/api'
 
 export function Game () {
+  const { setScoreList, scoreList } = useScoreContext()
   const pageCtx = useContext(PageContext)
   const [winningColor, setWinningColor] = useState<string>('')
   const [winCount, setWinCount] = useState<number>(0)
@@ -31,6 +34,15 @@ export function Game () {
 
   useEffect(() => {
     if (remainingTime === 0) {
+      setScoreList(prev => {
+        const updatedData = prev.map(player => {
+          return player.id === scoreList[scoreList.length - 1].id
+            ? { ...player, score: winCount }
+            : player
+        })
+        saveScore(updatedData)
+        return updatedData
+      })
       pageCtx?.setPage(2)
     }
   }, [remainingTime])

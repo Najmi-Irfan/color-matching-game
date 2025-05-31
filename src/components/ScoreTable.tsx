@@ -1,17 +1,14 @@
-export function ScoreTable () {
-  const topScores = [
-    { id: 1, score: 11, name: 'John', date: '29/05/2025' },
-    { id: 2, score: 9, name: 'Alice', date: '28/05/2025' }
-    // You can test with fewer or zero items
-  ]
+import type { ScoreProps } from "../types/score"
 
-  const shouldShowTable = topScores.length > 0
+export function ScoreTable ({scoreList}:{scoreList: ScoreProps[]}) {
+
+  const shouldShowTable = scoreList.length > 0
 
   const filledScores = shouldShowTable
     ? Array.from({ length: 10 }, (_, i) => {
         return (
-          topScores[i] || {
-            id: i + 1,
+          scoreList[i] || {
+            id: '-',
             score: '-',
             name: '-',
             date: '-'
@@ -26,7 +23,7 @@ export function ScoreTable () {
         Top Scores
       </p>
 
-      <div className='overflow-x-auto'>
+      <div>
         {shouldShowTable ? (
           <table className='w-full border-separate border-spacing-y-2'>
             <thead>
