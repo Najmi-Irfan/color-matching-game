@@ -43,7 +43,7 @@ export function Game () {
         saveScore(updatedData)
         return updatedData
       })
-      // pageCtx?.setPage(2)
+      pageCtx?.setPage(2)
     }
   }, [remainingTime])
 
@@ -96,7 +96,7 @@ export function Game () {
           <div
             key={list.color}
             onClick={() => handleClick(list.color)}
-            className='w-[100px] h-[100px] rounded-full absolute cursor-pointer'
+            className='w-[50px] h-[50px] rounded-full absolute cursor-pointer sm:w-[100px] sm:h-[100px]'
             style={{
               backgroundColor: list.color,
               left: `${list.x}%`,
@@ -106,7 +106,7 @@ export function Game () {
         ))}
       </div>
 
-      <div className='fixed bottom-5 w-full text-center text-white'>
+      <div className='fixed bottom-5 w-full text-center self-center text-white z-50 px-4 pb-safe'>
         {message}
       </div>
     </div>
