@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { COLOUR_LIST } from '../constant'
+import { CIRCLE_SIZE, COLOUR_LIST } from '../constant'
 import type { AxisProps } from '../types/axis'
 import { PageContext } from '../App'
 import { useScoreContext } from '../hooks/score'
@@ -48,18 +48,46 @@ export function Game () {
   }, [remainingTime])
 
   const generateCircles = useCallback(() => {
-    const circleList = []
-    // Select index randomly from the array
+    const circleList: AxisProps[] = []
     const targetColor = COLOUR_LIST[Math.floor(Math.random() * listLength)]
 
-    // traverse each element to generate random axis X and Y
-    for (let i = 0; i < listLength; i++) {
-      const circleObj: AxisProps = {
-        color: COLOUR_LIST[i],
-        x: Math.random() * (100 - 5),
-        y: Math.random() * (100 - 5)
+    const containerWidth = window.innerWidth
+    const containerHeight = 400
+    const circleSize = window.innerWidth >= 640 ? 100 : 50
+    const radius = circleSize / 2
+    const maxX = containerWidth - circleSize
+    const maxY = containerHeight - circleSize
+
+    const isOverlapping = (x: number, y: number, list: AxisProps[]) => {
+      for (const item of list) {
+        const existingX = (item.x / 100) * containerWidth
+        const existingY = (item.y / 100) * containerHeight
+        const dx = existingX - x
+        const dy = existingY - y
+        const distance = Math.sqrt(dx * dx + dy * dy)
+        if (distance < circleSize) {
+          return true // overlap detected
+        }
       }
-      circleList.push(circleObj)
+      return false // no overlap
+    }
+
+    let attempts = 0
+    let i = 0
+    while (i < listLength && attempts < 1000) {
+      const x = Math.random() * maxX + radius
+      const y = Math.random() * maxY + radius
+
+      if (!isOverlapping(x, y, circleList)) {
+        circleList.push({
+          color: COLOUR_LIST[i],
+          x: (x / containerWidth) * 100,
+          y: (y / containerHeight) * 100
+        })
+        i++
+      }
+
+      attempts++
     }
 
     setWinningColor(targetColor)
