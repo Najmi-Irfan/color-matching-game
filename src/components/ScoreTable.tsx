@@ -3,15 +3,10 @@ import type { ScoreProps } from '../types/score'
 export function ScoreTable ({ scoreList }: { scoreList: ScoreProps[] }) {
   const shouldShowTable = scoreList.length > 0
 
-  // Sort scores in descending order by score value
-  const sortedScores = [...scoreList].sort(
-    (a, b) => Number(b.score) - Number(a.score)
-  )
-
   const filledScores = shouldShowTable
     ? Array.from({ length: 10 }, (_, i) => {
         return (
-          sortedScores[i] || {
+           scoreList[i] || {
             id: '-',
             score: '-',
             name: '-',

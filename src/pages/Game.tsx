@@ -35,14 +35,25 @@ export function Game () {
   useEffect(() => {
     if (remainingTime === 0) {
       setScoreList(prev => {
-        const updatedData = prev.map(player => {
-          return player.id === scoreList[scoreList.length - 1].id
-            ? { ...player, score: winCount }
-            : player
-        })
-        saveScore(updatedData)
-        return updatedData
+        // Step 1: Update the last player's score
+        const lastPlayerId = prev[prev.length - 1]?.id
+        const updatedData = prev.map(player =>
+          player.id === lastPlayerId ? { ...player, score: winCount } : player
+        )
+
+        // Step 2: Sort by descending score
+        const sortedData = updatedData.sort(
+          (a, b) => Number(b.score) - Number(a.score)
+        )
+
+        // Step 3: Keep only top 10 scores
+        const top10 = sortedData.slice(0, 10)
+
+        // Step 4: Save and update
+        saveScore(top10)
+        return top10
       })
+
       pageCtx?.setPage(2)
     }
   }, [remainingTime])
@@ -88,8 +99,14 @@ export function Game () {
       if (!isOverlapping(x, y, circleList)) {
         circleList.push({
           color: COLOUR_LIST[i],
-          x: Math.min((x / containerWidth) * 100, 100 - (circleSize / containerWidth) * 100),
-          y: Math.min((y / containerHeight) * 100, 100 - (circleSize / containerHeight) * 100)
+          x: Math.min(
+            (x / containerWidth) * 100,
+            100 - (circleSize / containerWidth) * 100
+          ),
+          y: Math.min(
+            (y / containerHeight) * 100,
+            100 - (circleSize / containerHeight) * 100
+          )
         })
         i++
       }
