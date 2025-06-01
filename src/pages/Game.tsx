@@ -54,7 +54,9 @@ export function Game () {
         return top10
       })
 
-      pageCtx?.setPage(2)
+      setTimeout(() => {
+        pageCtx?.setPage(2)
+      }, 500)
     }
   }, [remainingTime])
 
@@ -92,6 +94,8 @@ export function Game () {
 
     let attempts = 0
     let i = 0
+    // try default attempt 1000 times to get a correct position
+    // traverse each element in array to create a circle
     while (i < listLength && attempts < 1000) {
       const x = Math.random() * maxX + radius
       const y = Math.random() * maxY + radius
@@ -128,6 +132,7 @@ export function Game () {
       }
 
       setTimeout(() => {
+        setMessage('')
         generateCircles()
       }, 500)
     },
