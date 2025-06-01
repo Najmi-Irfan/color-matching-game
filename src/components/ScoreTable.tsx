@@ -1,13 +1,17 @@
-import type { ScoreProps } from "../types/score"
+import type { ScoreProps } from '../types/score'
 
-export function ScoreTable ({scoreList}:{scoreList: ScoreProps[]}) {
-
+export function ScoreTable ({ scoreList }: { scoreList: ScoreProps[] }) {
   const shouldShowTable = scoreList.length > 0
+
+  // Sort scores in descending order by score value
+  const sortedScores = [...scoreList].sort(
+    (a, b) => Number(b.score) - Number(a.score)
+  )
 
   const filledScores = shouldShowTable
     ? Array.from({ length: 10 }, (_, i) => {
         return (
-          scoreList[i] || {
+          sortedScores[i] || {
             id: '-',
             score: '-',
             name: '-',
@@ -37,7 +41,7 @@ export function ScoreTable ({scoreList}:{scoreList: ScoreProps[]}) {
             <tbody>
               {filledScores.map((item, index) => (
                 <tr key={index} className='text-center'>
-                  <td className='px-4 py-2 rounded-l-md'>{item.id}</td>
+                  <td className='px-4 py-2 rounded-l-md'>{index + 1}</td>
                   <td className='px-4 py-2'>{item.score}</td>
                   <td className='px-4 py-2'>{item.name}</td>
                   <td className='px-4 py-2 rounded-r-md'>{item.date}</td>
