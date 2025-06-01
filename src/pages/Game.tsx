@@ -6,7 +6,7 @@ import { useScoreContext } from '../hooks/score'
 import { saveScore } from '../service/api'
 
 export function Game () {
-  const { setScoreList, scoreList } = useScoreContext()
+  const { setScoreList } = useScoreContext()
   const pageCtx = useContext(PageContext)
   const [winningColor, setWinningColor] = useState<string>('')
   const [winCount, setWinCount] = useState<number>(0)
